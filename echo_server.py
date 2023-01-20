@@ -25,11 +25,14 @@ def main():
 
 # made the listener threaded instead of a singular while loop in main
 def handleConnection(conn, address):
-    print("Connected by", address) # confirm the connection
-    while True:
-        full_data = conn.recv(BUFFER_SIZE)
-        time.sleep(0.5)
-        conn.sendall(full_data)
+    with conn:
+        print("Connected by", address) # confirm the connection
+        
+        while True:
+            full_data = conn.recv(BUFFER_SIZE)
+            if not full_data:
+                break
+            conn.sendall(full_data)
     
 if __name__ == "__main__":
     main()
