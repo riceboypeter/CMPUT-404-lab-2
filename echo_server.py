@@ -10,7 +10,7 @@ def main():
 
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         
-        print("Starting proxy server")
+        print("Starting echo server")
         s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         s.bind((HOST, PORT))
         s.listen(2) # allows 2 connections
