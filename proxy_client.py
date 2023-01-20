@@ -1,23 +1,30 @@
 import socket
 
-BYTES_TO_READ = 4096
+HOST = "127.0.0.1"
+PORT = 8001
+BUFFER_SIZE = 1024
+request = "GET / HTTP/1.0\r\nHost: www.google.com\r\n\r\n"
 
-def get(host, port):
-    request = b"GET / HTTP/1.1\nHost: www.google.com\n\n"
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect((host,port))
-        s.send(request)
-        # Shut the socket to further writes
-        s.shutdown(socket.SHUT_WR)
-        
-        print("Waiting for response!")
-        chunk = s.recv(BYTES_TO_READ)
-        result = b'' + chunk
-        
-        while(len(chunk)>0):
-            chunk = s.recv(BYTES_TO_READ)
-            result += chunk
-        s.close()
-        return result
+def connect(addr):
 
-print(get("127.0.0.1", 8080))
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.connect(addr)
+            s.sendall(request.encode())
+            s.shutdown(socket.SHUT_WR)
+
+            full_data = s.recv(BUFFER_SIZE)
+            print(full_data)
+    
+    except Exception as e:
+        print(e)
+
+    finally:
+        s.close
+
+
+def main():
+    connect(('127.0.0.1', 8001))
+
+if __name__ == "__main__":
+    main()
