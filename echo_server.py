@@ -2,7 +2,7 @@ import socket
 import time
 import threading
 
-HOST = "127.0.0.1"
+HOST = "127.0.0.1" # ncat on windows doesn't find host unless specified
 PORT = 8001
 BUFFER_SIZE = 4096
 
