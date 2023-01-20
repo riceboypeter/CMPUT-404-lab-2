@@ -4,7 +4,7 @@ import threading
 
 HOST = "127.0.0.1" # ncat on windows doesn't find host unless specified
 PORT = 8001
-BUFFER_SIZE = 4096
+BUFFER_SIZE = 1024
 
 def main():
 
@@ -33,6 +33,8 @@ def handleConnection(conn, address):
             if not full_data:
                 break
             conn.sendall(full_data)
+
+        conn.close()
     
 if __name__ == "__main__":
     main()
